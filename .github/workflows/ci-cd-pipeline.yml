@@ -24,8 +24,8 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '8'
-        distribution: 'adoptopenjdk'
-
+        distribution: 'temurin'
+        
     # Paso 3: Instalar dependencias y construir el proyecto con Maven
     - name: Build with Maven
       run: mvn clean install
