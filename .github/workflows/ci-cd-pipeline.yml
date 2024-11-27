@@ -37,17 +37,15 @@ jobs:
   # Etapa de Despliegue (simulado)
   deploy:
     runs-on: ubuntu-latest
-    needs: build-and-test  # Este job depende del anterior
+    needs: build-and-test
 
     steps:
-      # Paso 1: Checkout del código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # Paso 2: Simulación del despliegue
       - name: Simulate deployment
         run: |
           echo "Simulando despliegue..."
           mkdir deploy
-          cp -r . deploy/
+          cp -r $(ls | grep -v deploy) deploy/
           echo "Aplicación desplegada en carpeta deploy"
