@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+# Definir en qué eventos se ejecutará el pipeline (en este caso, cuando haya un push o un pull request a la rama principal)
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Definimos un job que se ejecutará en un entorno de Ubuntu
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Paso 1: Check-out del código fuente
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Paso 2: Set up Node.js (si estás usando Node.js como ejemplo)
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    # Paso 3: Instalar dependencias (si es Node.js, puedes usar npm o yarn)
+    - name: Install dependencies
+      run: npm install
+
+    # Paso 4: Ejecutar pruebas unitarias (por ejemplo, con jest si es un proyecto Node.js)
+    - name: Run tests
+      run: npm test
+
+  # Job de despliegue (puedes configurarlo para un despliegue simple o simulado)
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test  # Aseguramos que este paso dependa de la construcción y pruebas previas.
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Deploy application
+        run: |
+          echo "Simulando despliegue..."
+          # Aquí podrías agregar comandos para hacer un despliegue real, como copiar archivos a un servidor, o empaquetar el código.
+          mkdir deploy
+          cp -r . deploy/
+          echo "Aplicación desplegada en carpeta deploy"
